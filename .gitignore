@@ -1,0 +1,14 @@
+*.pyc
+ve_*
+*- copia*
+node_modules
+*node_modules
+bower_components
+*bower_components
+~*
+*logs*
+/nbproject/private/
+nbproject/project.properties
+nbproject/project.xml
+upeu_erp_web/npm-debug.log
+

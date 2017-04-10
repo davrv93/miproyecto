@@ -1,0 +1,59 @@
+﻿<md-dialog aria-label="Form" ng-cloak class="main" md-theme="{{ $parent.dynamicTheme }}" id="size_regular2">
+    <form name='myform' autocomplete="off">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>
+                    <span class="md-subhead" ng-hide="items.id == null">{{'btn.editar'|translate}}</span>
+                    <span class="md-subhead" ng-hide="items.id">{{'btn.nuevo'|translate}}</span>
+                    <span class="md-subhead">{{'config.Deporte.title_modal'|translate}}</span>
+                </h2>
+                <span flex></span>
+                <core-ver-advertencias val="showErr"></core-ver-advertencias>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                <ng-md-icon icon="close" aria-label="Close dialog"></ng-md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content> 
+            <md-progress-circular layout-fill md-mode="indeterminate" ng-hide="true"></md-progress-circular>
+            <div class="md-dialog-content">
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                    <label>Nombres</label>
+                    <input name="nombre" ng-model="items.nombre" minlength="3" md-maxlength="30" ng-pattern="/^([a-z ñáéíóú]{2,30})$/i" ng-keyup="errores=null"   required/> 
+                    <div ng-messages="myform.nombre.$error" ng-if="showErr">
+                        <div ng-message="md-maxlength">Máximo de caracteres permitidos:30</div>
+                        <div ng-message="minlength">Mínimo de caracteres permitidos: 3</div>
+                        <div ng-message="required">Campo requerido</div>
+                        <div ng-message="pattern">Sólo se permite ingresar letras</div>
+                    </div>
+                    <span class="md-caption" ng-if="showErr" style="color:red;" ng-repeat="e in errores.nombre" >{{e}}</span>
+                </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                    <label>Apellidos</label>
+                    <input name="apellido" ng-model="items.apellido" minlength="3" md-maxlength="30" ng-pattern="/^([a-z ñáéíóú]{2,30})$/i" ng-keyup="errores=null"   required/> 
+                    <div ng-messages="myform.apellido.$error" ng-if="showErr">
+                        <div ng-message="md-maxlength">Máximo de caracteres permitidos:30</div>
+                        <div ng-message="minlength">Mínimo de caracteres permitidos: 3</div>
+                        <div ng-message="required">Campo requerido</div>
+                        <div ng-message="pattern">Sólo se permite ingresar letras</div>
+                    </div>
+                    <span class="md-caption" ng-if="showErr" style="color:red;" ng-repeat="e in errores.apellido" >{{e}}</span>
+                </md-input-container>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" class="dialog-actions">
+            <span flex></span>
+                    <md-button type="reset" class="md-raised" ng-click="limpiar()" ng-show="!items.id" id="efbtn">
+                    {{'btn.limpiar'|translate}}
+                    </md-button>
+                    <md-button type="reset" ng-click="cancel()" class="md-raised hover-raised">{{'btn.cancelar' | translate}}</md-button>
+                    <md-button type="submit" id="hover-primary-{{$parent.dynamicTheme}}" ng-click="save()" class="md-raised md-primary" ng-disabled="!myform.$valid">
+                {{'btn.guardar' | translate}}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

@@ -1,0 +1,23 @@
+var app = angular.module("app", [
+    'ui.router',
+    'ngResource',
+    'ngAnimate',
+    'ngAria',
+    'ngSanitize',
+    'ngMaterial',
+    'ngMdIcons',
+    'LocalStorageModule',
+    'toastr',
+    'ngDevhres',
+    'ngMessages',
+    '720kb.datepicker',
+    'ui.tree',
+    'angularModalService',
+    'textAngular',
+    'ncy-angular-breadcrumb',
+    'pascalprecht.translate',
+    'md-steppers',
+    'mdPickers',
+	'angular.filter',
+
+]);

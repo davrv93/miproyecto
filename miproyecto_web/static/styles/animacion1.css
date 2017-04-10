@@ -1,0 +1,10 @@
+
+.box_user:hover {
+  transform: rotate(360deg);
+}
+.rotate_user {
+  transition: all 0.4s ease-in-out;
+}
+.rotate_user:hover {
+  transition: all 0.4s ease-in-out;
+}

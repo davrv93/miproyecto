@@ -1,0 +1,107 @@
+<md-card>
+    <div ng-controller="HobbyCtrl" ng-cloak>
+        <div class="font-head">
+        <div layout-xs="column" layout="row">
+                <div flex-xs flex-gt-xs="60" layout="column" class="md-padding" print-section>
+                    <div class="md-padding">
+                        <span class="md-title">Hobby</span><br>
+                        <span class="md-caption">Lista de hobbys que puede tener una persona natural</span>
+                    </div>
+                </div>
+                <div flex-xs flex-gt-xs="40" layout="column" layout-align="center end" class="md-padding">
+                </div>
+            </div>
+        </div>
+
+        <md-content layout-xs="column" class="md-padding">
+            <md-card-actions layout="row" style="margin-top: -10px;" print-remove>
+        </md-card-actions>
+        <md-card-actions layout="row" layout-align="start center" layout-xs="column" print-remove>
+                                <md-card-icon-actions>
+                       <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="Listar" ng-click="onList('','yes')" id="hover-btn-{{$parent.dynamicTheme}}">
+                            <ng-md-icon icon="list" aria-label="Listar"></ng-md-icon>
+                            <md-tooltip md-autohide>Listar </md-tooltip>
+                        </md-button>
+
+                        <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="Registrar" ng-click="new_edit($event,'')" id="hover-btn-{{$parent.dynamicTheme}}"><ng-md-icon icon="add" aria-label="Registrar" ></ng-md-icon>
+                            <md-tooltip md-autohide>Nuevo</md-tooltip>
+                        </md-button>
+                        
+                        <md-button ng-show="selectedItems.length > 0" class="md-fab md-mini md-primary md-hue-2" aria-label="Eliminar" ng-click="confirmDelete($event)" id="hover-btn-{{$parent.dynamicTheme}}">
+                            <ng-md-icon icon="delete" aria-label="Eliminar"></ng-md-icon>
+                            <md-tooltip md-autohide>Eliminar</md-tooltip>
+                        </md-button>
+                        
+                        <md-button ng-show="selectedItems.length > 0" class="md-fab md-mini md-primary md-hue-2" aria-label="{{'btn.activar_seleccionados'|translate}}" ng-click="confirmActive($event,1)" id="hover-btn-{{$parent.dynamicTheme}}">
+                            <ng-md-icon icon="done" aria-label="{{'btn.activar_seleccionados'|translate}}"></ng-md-icon>
+                            <md-tooltip md-direction="top">Activar</md-tooltip>
+                        </md-button>
+                        <md-button ng-show="selectedItems.length > 0" class="md-fab md-mini md-primary md-hue-2" aria-label="{{'btn.desactivar_seleccionados'|translate}}" ng-click="confirmActive($event,0)" id="hover-btn-{{$parent.dynamicTheme}}">
+                            <ng-md-icon icon="remove_circle" aria-label="{{'btn.desactivar_seleccionados'|translate}}"></ng-md-icon>
+                            <md-tooltip md-direction="top">Desactivar</md-tooltip>
+
+
+                    </md-card-icon-actions>  
+                    <span flex></span>
+                        </md-button>
+                                <core-visible
+                                    md-elements="showColumn" 
+                                    md-name="Columnas" 
+                                    md-title="Columnas"
+                                    md-style="md-primary md-hue-2">
+                             </core-visible>
+        </md-card-actions>
+
+        <md-divider></md-divider>
+                
+        <md-table-container>
+            <table md-table id="datatable" core-responsive core-dragable="dataHobby">
+                <thead md-head>
+                    <tr md-row core-reorder="onReorder">
+                        <th md-column ng-show="showColumn[0].state" class="option-check-all" print-remove>
+                            <md-checkbox aria-label="Select All" class=" md-primary md-hue-2" ng-checked="isChecked()"
+                            md-indeterminate="isIndeterminate()" ng-click="toggleAll()" aria-label="{{'btn.eliminar'|translate}}">
+                            <span ng-if="isChecked()"></md-checkbox>
+                        </th>
+                        <th md-column ng-show="showColumn[1].state">N°</th>
+                        <th md-column ng-show="showColumn[2].state"  style="text-align:center;" reorder-val="nombre">Nombre</th>
+                        <th md-column ng-show="showColumn[3].state"  style="text-align:center;" reorder-val="apellido">Tipo de hobby</th>
+                        <th md-column ng-show="showColumn[4].state" class="align-options" print-remove>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody md-body>
+                    <tr md-row ng-repeat="x in dataHobby">
+                        <td md-cell ng-show="showColumn[0].state" class="option-check-all" print-remove> 
+                            <md-checkbox  class="md-primary md-hue-2" ng-checked="exists(x, selectedItems)" 
+                            ng-click="toggle(x, selectedItems)" aria-label="{{'btn.eliminar'|translate}}"></md-checkbox>
+                        </td>
+                        <td md-cell ng-show="showColumn[1].state">{{ $index + 1 }}</td>
+                        <td md-cell ng-show="showColumn[2].state" style="text-align:center;"> {{ x.nombre }}</td>
+                        <td md-cell ng-show="showColumn[3].state" style="text-align:center;"> {{ x.tipo_hobby }}</td>
+                        <td md-cell ng-show="showColumn[4].state" print-remove>
+                                <div layout="row">
+                                    <div layout="column" layout-xs="33"> 
+
+                                    <md-button class="md-icon-button md-primary md-hue-2" aria-label="Edit" id="modify" ng-click="new_edit($event, x)">
+                                        <md-tooltip md-autohide>Editar</md-tooltip>
+                                        <ng-md-icon icon="edit" aria-label="editar"></ng-md-icon>
+                                    </md-button>
+                                    </div>
+                                    <div layout="column" layout-xs="33">
+                                    <md-button class="md-icon-button md-primary md-hue-2" aria-label="Delete" id="modify" ng-click="confirmDelete($event, x)">
+
+                                    <md-tooltip md-autohide>Eliminar</md-tooltip>
+                                    <ng-md-icon icon="delete" aria-label="eliminar"></ng-md-icon>
+                                    </md-button>
+                                    </div>
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+                </md-table-container>
+            </md-content>
+        <core-loading-general indeterminado="Indeterminado"></core-loading-general>
+    </div>
+</md-card>
