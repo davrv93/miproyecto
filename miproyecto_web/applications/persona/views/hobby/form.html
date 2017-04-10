@@ -21,6 +21,7 @@
                     <md-input-container class="md-block" flex-gt-sm>
                     <label>Nombres</label>
                     <input name="nombre" ng-model="items.nombre" minlength="3" md-maxlength="30" ng-pattern="/^([a-z ñáéíóú]{2,30})$/i" ng-keyup="errores=null"   required/> 
+                    <!-- Mensajes de validación -->
                     <div ng-messages="myform.nombre.$error" ng-if="showErr">
                         <div ng-message="md-maxlength">Máximo de caracteres permitidos:30</div>
                         <div ng-message="minlength">Mínimo de caracteres permitidos: 3</div>
@@ -34,6 +35,7 @@
                     <md-input-container class="md-block" flex-gt-sm>
                     <label>Tipo de hobby</label>
                     <input name="apellido" ng-model="items.tipo_hobby" minlength="3" md-maxlength="30" ng-pattern="/^([a-z ñáéíóú]{2,30})$/i" ng-keyup="errores=null"   required/> 
+                    <!-- Mensajes de validación -->
                     <div ng-messages="myform.apellido.$error" ng-if="showErr">
                         <div ng-message="md-maxlength">Máximo de caracteres permitidos:30</div>
                         <div ng-message="minlength">Mínimo de caracteres permitidos: 3</div>

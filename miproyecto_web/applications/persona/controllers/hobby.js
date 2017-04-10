@@ -1,14 +1,14 @@
 app.controller("HobbyCtrl", function($scope, $mdDialog, msg, API_PERSONA, $rootScope) {
 
+
+    //Variable donde se guardarán los valoes de cada una de las columnas del modelo a la hora de realizar una inserción
     $scope.items = {};
+    //Variable donde se guardarán los valoes de cada una de las columnas del modelo a la hora de realizar un get.
     $scope.dataHobby = [];
+    //Array que contiene los ids para la eliminación múltiple
     $scope.selectedItems = [];
     
-    $scope.qryPag = { 
-        page_size: 5,
-        page:1
-    };
-
+    //Array que almacena parametros para filtrar u ordenar la data, en este caso, al ser el reporte inicial va vacío
     $scope.params = {
         queryFilter: '',
         query:'',
@@ -16,16 +16,18 @@ app.controller("HobbyCtrl", function($scope, $mdDialog, msg, API_PERSONA, $rootS
     };
 
     $scope.onList = function(query){
+        //variable para animación de cargando
         $rootScope.Indeterminado = true;
-        if(query!=null)
-        {
-            $scope.params['queryFilter']=query['queryFilter']
-        }
 
-        API_PERSONA.Hobby.list($scope.params || $scope.qryPag).$promise.then(function (r) {       
-                console.log(r);
+        //Invocación al servicio configurado en el archivo api.js de services de Persona
+        //Realiza la petición list para mostrar el array retornante en la vista
+        API_PERSONA.Hobby.list($scope.params).$promise.then(function (r) {       
+                //Asignación de la data según el retorno de la consulta
                 $scope.dataHobby = r;
+                //variable para animación de cargando, se detiene la animación
                 $rootScope.Indeterminado = false;
+
+                //Funciones para el eliminado múltiple
                 $scope.toggle = function (lista, lst)
                     {
                         var idx = lst.indexOf(lista.id);
@@ -65,24 +67,15 @@ app.controller("HobbyCtrl", function($scope, $mdDialog, msg, API_PERSONA, $rootS
                     };
 
             }, function(err){
-                //console.log('Error:'+ err);
             }
         );
     };
 
+    //Invocación al listado inicial
     $scope.onList();
 
-    $scope.onPaginate = function(page_size,page) {
-       $scope.onList(angular.extend({},$scope.params, {page_size:page_size, page: page}));
-    };
-
-    $scope.onSearch = function(x, y) {
-        $scope.params.queryFilter= x;
-        $scope.params.query= y;   
-        $scope.onList(angular.extend({}, $scope.qryPag,  $scope.params));
-
-    };
-
+    //Array que sirve para ocultar o mostrar las columnas en la vista, notese que el type debe ser igual al nombre
+    // de la columna, y el index es igual al asignado al td md-cell en el index.html en el atributo ng-show
     $scope.showColumn = [
         { index: 0, state: true, view: 'Checkbox', type: ''},
         { index: 1, state: true, view: 'N°',        type: 'contador'},
@@ -92,30 +85,11 @@ app.controller("HobbyCtrl", function($scope, $mdDialog, msg, API_PERSONA, $rootS
 
     ];
 
-    $scope.onReorder = function(x) {
-      $scope.params.orderBy= x;  
-      $scope.onList(angular.extend({}, $scope.qryPag, $scope.params));
-
-    };
-
-    $scope.queryFilters = [
-        {
-            'name': '',
-            'view': 'Nombre',
-            'type': 'nombre'
-        },
-        {
-            'name': '',
-            'view': 'Tipo de hobby',
-            'type': 'tipo_hobby__nombre'
-        },
-    ];
-
-
+    //Función que permite aperturar un nuevo dialog o modal, es el que abre el formulario para agregar o editar registro
     $scope.new_edit = function(event, obj){
         $rootScope.Indeterminado = true;
         $scope.selectedItems = [];
-
+        //Es importante asignar el controller que utilizará y el archivo html
         $mdDialog.show({
 
               controller: "formHobby",
@@ -130,14 +104,16 @@ app.controller("HobbyCtrl", function($scope, $mdDialog, msg, API_PERSONA, $rootS
              });
    };
 
+   //Función que invoca a la lista, el refresh se realiza generalmente luego de una inserción, actualización o eliminación
     $scope.refresh = function (){
         $scope.onList(angular.extend({}, $scope.qryPag, $scope.params));
     };
     
+    //Función que abre un cuadro de diálogo para eliminar
     $scope.confirmDelete = function(event, obj) {
         var confirm = $mdDialog.confirm()
-            .title(msg.titleConfirm())
-            .textContent(msg.bodyConfirmDelete())
+            .title('Eliminación')
+            .textContent('¿Está seguro que desea eliminar el registro?')
             .ariaLabel('Lucky day')
             .targetEvent(event)
             .ok('SI')
@@ -152,40 +128,12 @@ app.controller("HobbyCtrl", function($scope, $mdDialog, msg, API_PERSONA, $rootS
         });
     };
 
-    $scope.confirmActive = function(event, estado) {
-       var confirm = $mdDialog.confirm()
-           .title(msg.titleConfirm())
-           .textContent(msg.bodyConfirmUpdate())
-           .ariaLabel('Activar o desactivar Estado civil')
-           .targetEvent(event)
-           .ok('SI')
-           .cancel('NO');
-       $mdDialog.show(confirm).then(function() {
-            $scope.changeState(estado);                
-            $mdDialog.hide();
-
-       }, function() {
-           msg.cancel();
-       });
-   };
-
-    $scope.changeState = function (state) {
-        var data = {
-            bulk_id : $scope.selectedItems,
-            bulk_state : state
-        }
-        API_PERSONA.Hobby.update({ id: 0 } , data).$promise.then(function(success) {
-            $scope.refresh();
-        },function(error) {
-            msg.yesUpdate(error.data.detail);
-            $scope.refresh();
-        });
-    };
-
+  //Función que elimina
     $scope.destroyMany = function (obj) {
         if (obj) {
             $scope.selectedItems = [obj.id]
         }
+        //Se invoca al microrecurso del ViewSet de Hobby con url_path='destroy'
         API_PERSONA.Hobby.destroy({ microrecurso: 'destroy',bulk_id : $scope.selectedItems}).$promise.then(function(success) {
            $scope.refresh();
             msg.yesDelete();
@@ -200,7 +148,7 @@ app.controller("HobbyCtrl", function($scope, $mdDialog, msg, API_PERSONA, $rootS
 });
 
 app.controller("formHobby", function($scope, obj, API_PERSONA, $mdDialog, msg, $rootScope, $timeout) {
-
+    //Es el controlador que se declaró en la función $scope.new_edit
 
     $scope.items = {};
     $scope.showErr = true;
@@ -247,10 +195,13 @@ app.controller("formHobby", function($scope, obj, API_PERSONA, $mdDialog, msg, $
 
     
     $scope.errores = [];
-
+    //Función que permite guardar el registro
     $scope.save = function() {
         $scope.errores = [];
+        //Si al formulario llegó un ID desde el reporte, es decir si se hiso clic en el botón editar
         if ($scope.items.id) {
+            //Entonces ejecutar el servicio Hobby y el método PUT (update) asignando el id a actualizar
+            // y el $scope.items que equivale a los valores de las columnas
             API_PERSONA.Hobby.update({ id: $scope.items.id }, $scope.items).$promise.then(function(r){
                 msg.yesUpdate();
                 $mdDialog.hide(r);
@@ -259,6 +210,8 @@ app.controller("formHobby", function($scope, obj, API_PERSONA, $mdDialog, msg, $
                 $scope.errores = err.data;
             });
         } else {
+            //Entonces ejecutar el servicio Hobby y el método POST (save) asignando $scope.items que equivale a los valores de las columnas
+            //del registro a insertar
             API_PERSONA.Hobby.save($scope.items).$promise.then(function(r) {
                msg.yesInsert();
                $mdDialog.hide(r);
