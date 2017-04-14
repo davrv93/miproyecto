@@ -5,20 +5,18 @@ app.run(['$rootScope', '$state', function($rootScope, $state) {
         evt.preventDefault();
         $state.go(to.redirectTo, params)
 
-      }
+    }
 
 
-    });
+});
 }]);
 
 app
-    .config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/apps");
 
 
-    $stateProvider
-
-    
+    $stateProvider    
     .state("apps", {
         url: "/apps",
         data: { page: 'Apps page' },

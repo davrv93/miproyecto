@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title ng-bind="$state.current.data.page|translate"></title>
+    <title>Accent insensitive search in Oracle - AngularJS + Django</title>
 <link rel="shortcut icon" type="image/x-icon" href="favicon.png"/>
     <meta name="viewport" content="initial-scale=1" />
     <link rel="stylesheet" href="node_modules/angular-material/angular-material.min.css" type="text/css" />
@@ -11,31 +11,14 @@
     <link rel="stylesheet" type="text/css" href="node_modules/angular-toastr/dist/angular-toastr.css" />
     <link rel="stylesheet" href="static/styles/layout.css" type="text/css" />
     <link rel="stylesheet" href="static/styles/table.css" type="text/css" />
-    <link rel="stylesheet" href="static/styles/demo-style.css" type="text/css">
-    <link rel="stylesheet" href="static/styles/animacion1.css" type="text/css">
-    <link rel="stylesheet" href="static/styles/menu_colors.css" type="text/css">
-    <link href="node_modules/angularjs-datepicker/src/css/angular-datepicker.css" rel="stylesheet" type="text/css" />
-    <link href="node_modules/angular-material-datetimepicker/css/material-datetimepicker.min.css" rel="stylesheet" type="text/css" />
-    <link href="node_modules/mdPickers/dist/mdPickers.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="static/styles/demo-style.css" type="text/css">    
     <link rel="stylesheet" href="node_modules/angular-ui-tree/dist/angular-ui-tree.min.css">
-    <link rel="stylesheet" href="static/scripts/components/dragdrop/dragdrop.css">
     <link rel="stylesheet" href="static/styles/ventanas_modal.css" type="text/css">
     <link rel="stylesheet" href="static/styles/aplications.css" type="text/css">
-    <link rel="stylesheet" href="static/styles/erp-css.css" type="text/css">
-    <link rel="stylesheet" href="static/styles/reportes.css" type="text/css">
-    
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="node_modules/textangular/dist/textAngular.css">
-    <link rel="stylesheet" href="static/styles/editor.css" type="text/css">
-    <link rel="stylesheet" href="node_modules/md-steppers/dist/md-steppers.css" type="text/css">
-    <link rel="stylesheet" href="node_modules/mdPickers/dist/mdPickers.css" type="text/css">
-
-    <link rel="stylesheet" href="static/styles/aplications.css" type="text/css">
-
 </head>
 
 <body>
-    <div class="app" ui-view ng-controller="AppCtrl"></div>
+    <div class="app" ui-view ng-controller="PersonaNaturalCtrl"></div>
     <script src="node_modules/angular/angular.min.js"></script>
     <script src="node_modules/angular-animate/angular-animate.min.js"></script>
     <script src="node_modules/angular-aria/angular-aria.min.js"></script>
@@ -47,41 +30,21 @@
     <script src="node_modules/angular-local-storage/dist/angular-local-storage.js"></script>
     <script src="node_modules/angular-messages/angular-messages.min.js"></script>
     <script src="node_modules/angular-modal-service/dst/angular-modal-service.min.js"></script>
-    
-
     <script type="text/javascript" src="node_modules/angular-toastr/dist/angular-toastr.tpls.js"></script>
-
-    <script src="node_modules/angularjs-datepicker/src/js/angular-datepicker.js"></script>
     <script type="text/javascript" src="node_modules/angular-ui-tree/dist/angular-ui-tree.js"></script>
-    <script src="node_modules/angular-i18n/angular-locale_es-es.js"></script>
-    <script src="node_modules/angular-translate/dist/angular-translate.js"></script>
- 
-
-    <script src="node_modules/textangular/dist/textAngular-rangy.min.js"></script>
-    <script src="node_modules/textangular/dist/textAngular-sanitize.min.js"></script>
-    <script src="node_modules/textangular/dist/textAngular.min.js"></script>
-    <script src="node_modules/angular-breadcrumb/dist/angular-breadcrumb.min.js"></script>
-    <script src="node_modules/md-steppers/dist/md-steppers.js"></script>
-    <script src="node_modules/mdPickers/dist/mdPickers.js"></script>
-	<script src="node_modules/angular-filter/dist/angular-filter.min.js"></script> 
+    <script src="node_modules/angular-filter/dist/angular-filter.min.js"></script> 
     
-    <script src="app/app.js"></script>
-    <script src="app/internacionalizacion.js"></script> 
 
-    <script src="static/scripts/angular-devhres.js"></script>
-    <script src="app/config.js"></script>
-    <script src="app/router.js"></script>
-    <script src="app/controllers/app.js"></script>
- 
+    <script src="static/scripts/angular-utilitys.js"></script>
+    
+    <script src="applications/config.js"></script>
+    <script src="applications/router.js"></script>
     <script src="applications/persona/config.js"></script>
     <script src="applications/persona/router.js"></script>
 
     <script src="applications/persona/services/api.js"></script>
-
     <script src="applications/persona/controllers/persona_natural.js"></script>
     <script src="applications/persona/controllers/hobby.js"></script>
-
-    <script src="static/scripts/components/visible/visible.js"></script>
 
 
 </body>
